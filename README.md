@@ -9,7 +9,7 @@ Just for fun.
 How does it work?
 -----------------
 
-Two players steer a simple ship like sprite and shoot at each other until ones ship has no remaining health points. Ok, I'm sure there a are more promising game concepts out there. ;)
+Two players steer a simple ship like sprite and shoot at each other until one players ship has no remaining health points. Ok, I'm sure there a are more promising game concepts out there. ;)
 
 Roadmap
 -------
@@ -18,4 +18,5 @@ Roadmap
 - Create scenes to represent the different menu and battle states. (Useful to explain *compartmentation*)
 - Separate logic and views better. (Useful to explain *MVC* paradigm)
 - Create different types of battle ships. (Useful to explain *interfaces* and *factory pattern*)
+- Extract game mechanic constants into central class for better tweaking.
 
