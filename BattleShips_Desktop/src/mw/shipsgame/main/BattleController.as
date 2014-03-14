@@ -46,6 +46,11 @@ public class BattleController implements IAnimatable {
         return gameOver;
     }
 
+    public function destroy():void {
+        projectiles.forEach(removeProjectile);
+        trace(projectiles.length);
+    }
+
     private function processProjectiles(projectiles:Vector.<Projectile>):Vector.<Projectile> {
         var ret:Vector.<Projectile> = new Vector.<Projectile>();
         var projectile:Projectile;
@@ -74,7 +79,7 @@ public class BattleController implements IAnimatable {
         return ret;
     }
 
-    private function isHit(ship:Ship, projectile:Projectile):Boolean {
+    private static function isHit(ship:Ship, projectile:Projectile):Boolean {
         return (ship.getBounds(Starling.current.stage).containsPoint(projectile.getCurrentLocation()) &&
                 ship.getPlayer() != projectile.getFiredByPlayer());
     }
@@ -87,15 +92,9 @@ public class BattleController implements IAnimatable {
         return ships[1];
     }
 
-
-    public function destroy():void {
-        projectiles.forEach(removeProjectile);
-        trace(projectiles.length);
-    }
-
-    private function removeProjectile(p:Projectile, index:int, vector:Vector.<Projectile>):void {
-        drawTarget.removeChild(p);
-        p.dispose();
+    private function removeProjectile(projectile:Projectile, index:int, vector:Vector.<Projectile>):void {
+        drawTarget.removeChild(projectile);
+        projectile.dispose();
     }
 }
 }

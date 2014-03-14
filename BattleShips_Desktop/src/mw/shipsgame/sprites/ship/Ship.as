@@ -14,11 +14,7 @@ import starling.display.Sprite;
 import starling.events.Event;
 import starling.textures.Texture;
 
-public class Ship extends Sprite implements IAnimatable {
-    private const SPEED_FACTOR:Number = 6;
-    private const SPEED_MAX:int = 50;
-    private const ROTATION_STEP_DEGREES:int = 5; // the smaller - the smoother
-
+public class Ship extends Sprite implements IAnimatable { // the smaller - the smoother
     private var shipTexture:Texture;
     private var background:DisplayObject;
     private var player:String = "";
@@ -39,6 +35,7 @@ public class Ship extends Sprite implements IAnimatable {
     }
 
     public function advanceTime(time:Number):void {
+        const SPEED_FACTOR:Number = 6;
         this.x += (shipVector.x * currentSpeed * time) * SPEED_FACTOR;
         this.y += (shipVector.y * currentSpeed * time) * SPEED_FACTOR;
     }
@@ -52,11 +49,13 @@ public class Ship extends Sprite implements IAnimatable {
     }
 
     public function turnLeft():void {
+        var ROTATION_STEP_DEGREES:int = 5;
         shipRotationRadians -= Mathutil.degreesToRadians(ROTATION_STEP_DEGREES);
         updateRotation();
     }
 
     public function turnRight():void {
+        const ROTATION_STEP_DEGREES:int = 5;
         shipRotationRadians += Mathutil.degreesToRadians(ROTATION_STEP_DEGREES);
         updateRotation();
     }
@@ -79,8 +78,7 @@ public class Ship extends Sprite implements IAnimatable {
 
     public function reduceHealth(by:Number):Boolean {
         health -= by;
-        if (health <= 0) return true;
-        return false;
+        return health <= 0;
     }
 
     private function onAddedToStage(event:Event):void {
@@ -110,6 +108,7 @@ public class Ship extends Sprite implements IAnimatable {
     }
 
     private function speedGuard(speed:int):int {
+        const SPEED_MAX:int = 50;
         if (speed > SPEED_MAX) {
             speed = SPEED_MAX;
         }

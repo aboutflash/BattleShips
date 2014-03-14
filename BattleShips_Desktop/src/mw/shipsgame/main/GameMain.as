@@ -64,8 +64,8 @@ public class GameMain extends Sprite {
         assetManager = new AssetManager();
         assetManager.enqueue(Assets);
         assetManager.loadQueue(onAssetsLoaded);
-        collisionDetectors = new Array();
-        shipControllers = new Array();
+        collisionDetectors = [];
+        shipControllers = [];
     }
 
     private function onAssetsLoaded(progress:Number):void {
@@ -179,8 +179,8 @@ public class GameMain extends Sprite {
     }
 
     private function createStatsMenu():void {
-        healthStatusBlue = new TextField(50, 40, "000", "Verdana", 18, 0x0000ff, true);
-        healthStatusRed = new TextField(50, 40, "000", "Verdana", 18, 0xff0000, true);
+        healthStatusBlue = new TextField(50, 40, ship_blue.getHealth().toString(), "Verdana", 18, 0x0000ff, true);
+        healthStatusRed = new TextField(50, 40, ship_red.getHealth().toString(), "Verdana", 18, 0xff0000, true);
         healthStatusBlue.hAlign = healthStatusRed.hAlign = TextAlign.CENTER;
         this.addChild(healthStatusBlue);
         this.addChild(healthStatusRed);
@@ -202,12 +202,12 @@ public class GameMain extends Sprite {
         for each (var shipController:ShipController in shipControllers) {
             shipController.destroy();
         }
-        shipControllers = new Array();
+        shipControllers = [];
 
         for each (var collisionDetector:CollisionDetector in collisionDetectors) {
             Starling.current.juggler.remove(collisionDetector);
         }
-        collisionDetectors = new Array();
+        collisionDetectors = [];
     }
 
     private function createBattleController():void {

@@ -34,21 +34,6 @@ public class Projectile extends Sprite implements IAnimatable {
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     }
 
-    private function onAddedToStage(event:Event):void {
-        removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-        draw();
-    }
-
-    private function draw():void {
-        var texture:Texture = Texture.fromTexture(GameMain.assets.getTexture('projectile_ball'));
-        shape = new Image(texture);
-        shape.scaleX = shape.scaleY = 0.2;
-        shape.alignPivot();
-        addChild(shape);
-        x = currentLocation.x;
-        y = currentLocation.y;
-    }
-
     public function advanceTime(time:Number):void {
         if (isTerminated) return;
         currentLifeTime += time;
@@ -57,10 +42,7 @@ public class Projectile extends Sprite implements IAnimatable {
     }
 
     public function get isTerminated():Boolean {
-        if (hasHit || currentLifeTime > maxTTL) {
-            return true;
-        }
-        return false;
+        return hasHit || currentLifeTime > maxTTL;
     }
 
     public function getCurrentLocation():Point {
@@ -77,6 +59,21 @@ public class Projectile extends Sprite implements IAnimatable {
 
     public function hit():void {
         hasHit = true;
+    }
+
+    private function onAddedToStage(event:Event):void {
+        removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+        draw();
+    }
+
+    private function draw():void {
+        var texture:Texture = Texture.fromTexture(GameMain.assets.getTexture('projectile_ball'));
+        shape = new Image(texture);
+        shape.scaleX = shape.scaleY = 0.2;
+        shape.alignPivot();
+        addChild(shape);
+        x = currentLocation.x;
+        y = currentLocation.y;
     }
 
 }

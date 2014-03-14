@@ -35,8 +35,7 @@ public class BattleShips extends Sprite {
     }
 
     private function onStageResize(event:ResizeEvent):void {
-        var viewport:Rectangle = new Rectangle(0, 0, event.width, event.height);
-        mStarling.viewPort = viewport;
+        mStarling.viewPort = new Rectangle(0, 0, event.width, event.height);
         mStarling.stage.stageWidth = event.width;
         mStarling.stage.stageHeight = event.height;
     }

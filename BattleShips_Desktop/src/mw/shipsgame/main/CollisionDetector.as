@@ -31,10 +31,7 @@ public class CollisionDetector implements IAnimatable {
     private function isOutsideStage():Boolean {
         var stageRect:Rectangle = new Rectangle(0, 0, Starling.current.stage.stageWidth, Starling.current.stage.stageHeight);
         var shipPosition:Point = new Point(ship.x, ship.y);
-        if (stageRect.containsPoint(shipPosition) == false) {
-            return true;
-        }
-        return false;
+        return stageRect.containsPoint(shipPosition) == false;
     }
 
 
