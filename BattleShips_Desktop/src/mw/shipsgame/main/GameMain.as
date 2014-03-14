@@ -237,7 +237,7 @@ public class GameMain extends Sprite {
 
     private function onShipFired(event:ShipEvent):void {
         var data:Object = event.data;
-        battleController.fireProjectile(data.position, data.vector, 1, data.playerName);
+        battleController.fireProjectile(data.position, data.vector, data.playerName);
     }
 
     private function onShipHitCallback():void {

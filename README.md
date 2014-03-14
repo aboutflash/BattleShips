@@ -18,5 +18,5 @@ Roadmap
 - Create scenes to represent the different menu and battle states. (Useful to explain *compartmentation*)
 - Separate logic and views better. (Useful to explain *MVC* paradigm)
 - Create different types of battle ships. (Useful to explain *interfaces* and *factory pattern*)
-- Extract game mechanic constants into central class for better tweaking.
+- ~~Extract game mechanic constants into central class for better tweaking.~~
 

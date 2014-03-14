@@ -17,7 +17,6 @@ public class CollisionDetector implements IAnimatable {
         this.ship = ship;
     }
 
-
     public function advanceTime(time:Number):void {
         detectStageBorderCollision();
     }

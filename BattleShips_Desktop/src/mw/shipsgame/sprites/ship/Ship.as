@@ -5,6 +5,7 @@ package mw.shipsgame.sprites.ship {
 import flash.geom.Point;
 import flash.geom.Vector3D;
 
+import mw.shipsgame.main.constants.Gameplay;
 import mw.shipsgame.utils.Mathutil;
 
 import starling.animation.IAnimatable;
@@ -17,12 +18,12 @@ import starling.textures.Texture;
 public class Ship extends Sprite implements IAnimatable { // the smaller - the smoother
     private var shipTexture:Texture;
     private var background:DisplayObject;
-    private var player:String = "";
-    private var shipName:String = "";
-    private var currentSpeed:int = 0;
+    private var player:String = undefined;
+    private var shipName:String = undefined;
+    private var currentSetSpeedLevel:Number = 0;
     private var _shipRotationRadians:Number = 0;
     private var shipVector:Vector3D = new Vector3D(0, -1);
-    private var health:Number = 100;
+    private var health:Number = Gameplay.SHIP_DEFAULT_HEALTH_POINTS;
 
     public function Ship(player:String, name:String, texture:Texture, initialPosition:Point, initialRotationDegrees:Number) {
         this.player = player;
@@ -35,17 +36,16 @@ public class Ship extends Sprite implements IAnimatable { // the smaller - the s
     }
 
     public function advanceTime(time:Number):void {
-        const SPEED_FACTOR:Number = 6;
-        this.x += (shipVector.x * currentSpeed * time) * SPEED_FACTOR;
-        this.y += (shipVector.y * currentSpeed * time) * SPEED_FACTOR;
+        this.x += (shipVector.x * currentSetSpeedLevel * time) * Gameplay.SHIP_SPEED_FACTOR;
+        this.y += (shipVector.y * currentSetSpeedLevel * time) * Gameplay.SHIP_SPEED_FACTOR;
     }
 
     public function accelerate():void {
-        currentSpeed = speedGuard(currentSpeed + 1);
+        currentSetSpeedLevel = speedGuard(currentSetSpeedLevel + 1);
     }
 
     public function decelerate():void {
-        currentSpeed = speedGuard(currentSpeed - 1);
+        currentSetSpeedLevel = speedGuard(currentSetSpeedLevel - 1);
     }
 
     public function turnLeft():void {
@@ -55,13 +55,12 @@ public class Ship extends Sprite implements IAnimatable { // the smaller - the s
     }
 
     public function turnRight():void {
-        const ROTATION_STEP_DEGREES:int = 5;
-        shipRotationRadians += Mathutil.degreesToRadians(ROTATION_STEP_DEGREES);
+        shipRotationRadians += Mathutil.degreesToRadians(Gameplay.SHIP_ROTATION_STEP_DEGREES);
         updateRotation();
     }
 
     public function stop():void {
-        currentSpeed = 0;
+        currentSetSpeedLevel = 0;
     }
 
     public function getMotionVector():Vector3D {
@@ -79,6 +78,16 @@ public class Ship extends Sprite implements IAnimatable { // the smaller - the s
     public function reduceHealth(by:Number):Boolean {
         health -= by;
         return health <= 0;
+    }
+
+    private static function speedGuard(speed:int):int {
+        if (speed > Gameplay.SHIP_MAX_FORWARD_SPEED_STEPS) {
+            speed = Gameplay.SHIP_MAX_FORWARD_SPEED_STEPS;
+        }
+        if (speed < Gameplay.SHIP_MAX_BACKWARD_SPEED_STEPS * -1) {
+            speed = Gameplay.SHIP_MAX_BACKWARD_SPEED_STEPS * -1;
+        }
+        return speed;
     }
 
     private function onAddedToStage(event:Event):void {
@@ -105,17 +114,6 @@ public class Ship extends Sprite implements IAnimatable { // the smaller - the s
         background.scaleX = background.scaleY = 0.5;
         background.alignPivot();
         updateRotation();
-    }
-
-    private function speedGuard(speed:int):int {
-        const SPEED_MAX:int = 50;
-        if (speed > SPEED_MAX) {
-            speed = SPEED_MAX;
-        }
-        if (speed < SPEED_MAX * -1) {
-            speed = SPEED_MAX * -1;
-        }
-        return speed;
     }
 
     private function updateRotation():void {

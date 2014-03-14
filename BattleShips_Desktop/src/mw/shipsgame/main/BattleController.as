@@ -37,8 +37,8 @@ public class BattleController implements IAnimatable {
         drawTarget.addChild(projectile);
     }
 
-    public function fireProjectile(fromLocation:Point, vector:Vector3D, maxTTL:Number, firedByPlayer:String):void {
-        var projectile:Projectile = new Projectile(fromLocation, vector, maxTTL, firedByPlayer);
+    public function fireProjectile(fromLocation:Point, vector:Vector3D, firedByPlayer:String):void {
+        var projectile:Projectile = new Projectile(fromLocation, vector, firedByPlayer);
         addProjectile(projectile);
     }
 
